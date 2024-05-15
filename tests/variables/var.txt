@@ -1,0 +1,5 @@
+program main{
+    string zx;
+    write("hello");
+    //zx = "hello";
+}

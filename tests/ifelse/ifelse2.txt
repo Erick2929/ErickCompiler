@@ -1,0 +1,10 @@
+program main {
+    int age = 18;
+    if (age < 18) {
+        writeln("Eres menor de edad.");
+    } else if (age >= 18 and age < 65) {
+        writeln("Eres mayor de edad.");
+    } else {
+        writeln("Eres de la tercera edad.");
+    }
+}

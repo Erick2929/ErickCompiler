@@ -1,0 +1,9 @@
+program main {
+    int num = 10;
+    int fact = 1;
+    while (num > 0) {
+        fact *= num;
+        num--;
+    }
+    writeln("El factorial de 10 es: ", fact);
+}

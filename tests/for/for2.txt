@@ -1,0 +1,7 @@
+program main {
+    int sum = 0;
+    for (int i = 1; i <= 100; i++) {
+        sum += i;
+    }
+    writeln("La suma de los números del 1 al 100 es: ", sum);
+}

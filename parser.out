@@ -1,0 +1,1754 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ASSIGN
+    COLON
+    DECREMENT
+    ELSE
+    FOR
+    IF
+    INCREMENT
+    LOGICAL_AND
+    LOGICAL_NOT
+    LOGICAL_OR
+    L_BRACKET
+    MODULO
+    NOT
+    RETURN
+    R_BRACKET
+    WHILE
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM MAIN L_BRACE expressions R_BRACE
+Rule 2     expressions -> expressions expression
+Rule 3     expressions -> expression
+Rule 4     expression -> var_declaration SEMICOLON
+Rule 5     expression -> write SEMICOLON
+Rule 6     expression -> writeln SEMICOLON
+Rule 7     expression -> empty
+Rule 8     write -> WRITE L_PAREN statement R_PAREN
+Rule 9     writeln -> WRITELN L_PAREN statement R_PAREN
+Rule 10    statement -> IDENTIFIER
+Rule 11    statement -> statement PLUS statement
+Rule 12    statement -> statement MINUS statement
+Rule 13    statement -> statement TIMES statement
+Rule 14    statement -> statement DIVIDE statement
+Rule 15    statement -> INT
+Rule 16    statement -> FLOAT
+Rule 17    statement -> BOOL
+Rule 18    statement -> STRING
+Rule 19    statement -> L_PAREN statement R_PAREN
+Rule 20    statement -> L_PAREN conditional R_PAREN
+Rule 21    conditional -> conditional EQUAL conditional
+Rule 22    conditional -> conditional NOT_EQUAL conditional
+Rule 23    conditional -> conditional GREATER conditional
+Rule 24    conditional -> conditional LESS conditional
+Rule 25    conditional -> conditional GREATER_EQUAL conditional
+Rule 26    conditional -> conditional LESS_EQUAL conditional
+Rule 27    conditional -> conditional AND conditional
+Rule 28    conditional -> conditional OR conditional
+Rule 29    conditional -> TRUE
+Rule 30    conditional -> FALSE
+Rule 31    conditional -> statement
+Rule 32    var_declaration -> data_type declarations
+Rule 33    data_type -> INT
+Rule 34    data_type -> FLOAT
+Rule 35    data_type -> BOOL
+Rule 36    data_type -> STRING
+Rule 37    declarations -> IDENTIFIER COMMA declarations
+Rule 38    declarations -> IDENTIFIER
+Rule 39    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 27
+ASSIGN               : 
+BOOL                 : 17 35
+COLON                : 
+COMMA                : 37
+DECREMENT            : 
+DIVIDE               : 14
+ELSE                 : 
+EQUAL                : 21
+FALSE                : 30
+FLOAT                : 16 34
+FOR                  : 
+GREATER              : 23
+GREATER_EQUAL        : 25
+IDENTIFIER           : 10 37 38
+IF                   : 
+INCREMENT            : 
+INT                  : 15 33
+LESS                 : 24
+LESS_EQUAL           : 26
+LOGICAL_AND          : 
+LOGICAL_NOT          : 
+LOGICAL_OR           : 
+L_BRACE              : 1
+L_BRACKET            : 
+L_PAREN              : 8 9 19 20
+MAIN                 : 1
+MINUS                : 12
+MODULO               : 
+NOT                  : 
+NOT_EQUAL            : 22
+OR                   : 28
+PLUS                 : 11
+PROGRAM              : 1
+RETURN               : 
+R_BRACE              : 1
+R_BRACKET            : 
+R_PAREN              : 8 9 19 20
+SEMICOLON            : 4 5 6
+STRING               : 18 36
+TIMES                : 13
+TRUE                 : 29
+WHILE                : 
+WRITE                : 8
+WRITELN              : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+conditional          : 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28 28
+data_type            : 32
+declarations         : 32 37
+empty                : 7
+expression           : 2 3
+expressions          : 1 2
+program              : 0
+statement            : 8 9 11 11 12 12 13 13 14 14 19 31
+var_declaration      : 4
+write                : 5
+writeln              : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM MAIN L_BRACE expressions R_BRACE
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . MAIN L_BRACE expressions R_BRACE
+
+    MAIN            shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM MAIN . L_BRACE expressions R_BRACE
+
+    L_BRACE         shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM MAIN L_BRACE . expressions R_BRACE
+    (2) expressions -> . expressions expression
+    (3) expressions -> . expression
+    (4) expression -> . var_declaration SEMICOLON
+    (5) expression -> . write SEMICOLON
+    (6) expression -> . writeln SEMICOLON
+    (7) expression -> . empty
+    (32) var_declaration -> . data_type declarations
+    (8) write -> . WRITE L_PAREN statement R_PAREN
+    (9) writeln -> . WRITELN L_PAREN statement R_PAREN
+    (39) empty -> .
+    (33) data_type -> . INT
+    (34) data_type -> . FLOAT
+    (35) data_type -> . BOOL
+    (36) data_type -> . STRING
+
+  ! shift/reduce conflict for WRITE resolved as shift
+  ! shift/reduce conflict for WRITELN resolved as shift
+  ! shift/reduce conflict for INT resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for BOOL resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+    WRITE           shift and go to state 12
+    WRITELN         shift and go to state 13
+    R_BRACE         reduce using rule 39 (empty -> .)
+    INT             shift and go to state 14
+    FLOAT           shift and go to state 15
+    BOOL            shift and go to state 16
+    STRING          shift and go to state 17
+
+  ! WRITE           [ reduce using rule 39 (empty -> .) ]
+  ! WRITELN         [ reduce using rule 39 (empty -> .) ]
+  ! INT             [ reduce using rule 39 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 39 (empty -> .) ]
+  ! BOOL            [ reduce using rule 39 (empty -> .) ]
+  ! STRING          [ reduce using rule 39 (empty -> .) ]
+
+    expressions                    shift and go to state 5
+    expression                     shift and go to state 6
+    var_declaration                shift and go to state 7
+    write                          shift and go to state 8
+    writeln                        shift and go to state 9
+    empty                          shift and go to state 10
+    data_type                      shift and go to state 11
+
+state 5
+
+    (1) program -> PROGRAM MAIN L_BRACE expressions . R_BRACE
+    (2) expressions -> expressions . expression
+    (4) expression -> . var_declaration SEMICOLON
+    (5) expression -> . write SEMICOLON
+    (6) expression -> . writeln SEMICOLON
+    (7) expression -> . empty
+    (32) var_declaration -> . data_type declarations
+    (8) write -> . WRITE L_PAREN statement R_PAREN
+    (9) writeln -> . WRITELN L_PAREN statement R_PAREN
+    (39) empty -> .
+    (33) data_type -> . INT
+    (34) data_type -> . FLOAT
+    (35) data_type -> . BOOL
+    (36) data_type -> . STRING
+
+  ! shift/reduce conflict for R_BRACE resolved as shift
+  ! shift/reduce conflict for WRITE resolved as shift
+  ! shift/reduce conflict for WRITELN resolved as shift
+  ! shift/reduce conflict for INT resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for BOOL resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+    R_BRACE         shift and go to state 18
+    WRITE           shift and go to state 12
+    WRITELN         shift and go to state 13
+    INT             shift and go to state 14
+    FLOAT           shift and go to state 15
+    BOOL            shift and go to state 16
+    STRING          shift and go to state 17
+
+  ! R_BRACE         [ reduce using rule 39 (empty -> .) ]
+  ! WRITE           [ reduce using rule 39 (empty -> .) ]
+  ! WRITELN         [ reduce using rule 39 (empty -> .) ]
+  ! INT             [ reduce using rule 39 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 39 (empty -> .) ]
+  ! BOOL            [ reduce using rule 39 (empty -> .) ]
+  ! STRING          [ reduce using rule 39 (empty -> .) ]
+
+    expression                     shift and go to state 19
+    var_declaration                shift and go to state 7
+    write                          shift and go to state 8
+    writeln                        shift and go to state 9
+    empty                          shift and go to state 10
+    data_type                      shift and go to state 11
+
+state 6
+
+    (3) expressions -> expression .
+
+    R_BRACE         reduce using rule 3 (expressions -> expression .)
+    WRITE           reduce using rule 3 (expressions -> expression .)
+    WRITELN         reduce using rule 3 (expressions -> expression .)
+    INT             reduce using rule 3 (expressions -> expression .)
+    FLOAT           reduce using rule 3 (expressions -> expression .)
+    BOOL            reduce using rule 3 (expressions -> expression .)
+    STRING          reduce using rule 3 (expressions -> expression .)
+
+
+state 7
+
+    (4) expression -> var_declaration . SEMICOLON
+
+    SEMICOLON       shift and go to state 20
+
+
+state 8
+
+    (5) expression -> write . SEMICOLON
+
+    SEMICOLON       shift and go to state 21
+
+
+state 9
+
+    (6) expression -> writeln . SEMICOLON
+
+    SEMICOLON       shift and go to state 22
+
+
+state 10
+
+    (7) expression -> empty .
+
+    R_BRACE         reduce using rule 7 (expression -> empty .)
+    WRITE           reduce using rule 7 (expression -> empty .)
+    WRITELN         reduce using rule 7 (expression -> empty .)
+    INT             reduce using rule 7 (expression -> empty .)
+    FLOAT           reduce using rule 7 (expression -> empty .)
+    BOOL            reduce using rule 7 (expression -> empty .)
+    STRING          reduce using rule 7 (expression -> empty .)
+
+
+state 11
+
+    (32) var_declaration -> data_type . declarations
+    (37) declarations -> . IDENTIFIER COMMA declarations
+    (38) declarations -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 24
+
+    declarations                   shift and go to state 23
+
+state 12
+
+    (8) write -> WRITE . L_PAREN statement R_PAREN
+
+    L_PAREN         shift and go to state 25
+
+
+state 13
+
+    (9) writeln -> WRITELN . L_PAREN statement R_PAREN
+
+    L_PAREN         shift and go to state 26
+
+
+state 14
+
+    (33) data_type -> INT .
+
+    IDENTIFIER      reduce using rule 33 (data_type -> INT .)
+
+
+state 15
+
+    (34) data_type -> FLOAT .
+
+    IDENTIFIER      reduce using rule 34 (data_type -> FLOAT .)
+
+
+state 16
+
+    (35) data_type -> BOOL .
+
+    IDENTIFIER      reduce using rule 35 (data_type -> BOOL .)
+
+
+state 17
+
+    (36) data_type -> STRING .
+
+    IDENTIFIER      reduce using rule 36 (data_type -> STRING .)
+
+
+state 18
+
+    (1) program -> PROGRAM MAIN L_BRACE expressions R_BRACE .
+
+    $end            reduce using rule 1 (program -> PROGRAM MAIN L_BRACE expressions R_BRACE .)
+
+
+state 19
+
+    (2) expressions -> expressions expression .
+
+    R_BRACE         reduce using rule 2 (expressions -> expressions expression .)
+    WRITE           reduce using rule 2 (expressions -> expressions expression .)
+    WRITELN         reduce using rule 2 (expressions -> expressions expression .)
+    INT             reduce using rule 2 (expressions -> expressions expression .)
+    FLOAT           reduce using rule 2 (expressions -> expressions expression .)
+    BOOL            reduce using rule 2 (expressions -> expressions expression .)
+    STRING          reduce using rule 2 (expressions -> expressions expression .)
+
+
+state 20
+
+    (4) expression -> var_declaration SEMICOLON .
+
+    R_BRACE         reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+    WRITE           reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+    WRITELN         reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+    INT             reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+    FLOAT           reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+    BOOL            reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+    STRING          reduce using rule 4 (expression -> var_declaration SEMICOLON .)
+
+
+state 21
+
+    (5) expression -> write SEMICOLON .
+
+    R_BRACE         reduce using rule 5 (expression -> write SEMICOLON .)
+    WRITE           reduce using rule 5 (expression -> write SEMICOLON .)
+    WRITELN         reduce using rule 5 (expression -> write SEMICOLON .)
+    INT             reduce using rule 5 (expression -> write SEMICOLON .)
+    FLOAT           reduce using rule 5 (expression -> write SEMICOLON .)
+    BOOL            reduce using rule 5 (expression -> write SEMICOLON .)
+    STRING          reduce using rule 5 (expression -> write SEMICOLON .)
+
+
+state 22
+
+    (6) expression -> writeln SEMICOLON .
+
+    R_BRACE         reduce using rule 6 (expression -> writeln SEMICOLON .)
+    WRITE           reduce using rule 6 (expression -> writeln SEMICOLON .)
+    WRITELN         reduce using rule 6 (expression -> writeln SEMICOLON .)
+    INT             reduce using rule 6 (expression -> writeln SEMICOLON .)
+    FLOAT           reduce using rule 6 (expression -> writeln SEMICOLON .)
+    BOOL            reduce using rule 6 (expression -> writeln SEMICOLON .)
+    STRING          reduce using rule 6 (expression -> writeln SEMICOLON .)
+
+
+state 23
+
+    (32) var_declaration -> data_type declarations .
+
+    SEMICOLON       reduce using rule 32 (var_declaration -> data_type declarations .)
+
+
+state 24
+
+    (37) declarations -> IDENTIFIER . COMMA declarations
+    (38) declarations -> IDENTIFIER .
+
+    COMMA           shift and go to state 27
+    SEMICOLON       reduce using rule 38 (declarations -> IDENTIFIER .)
+
+
+state 25
+
+    (8) write -> WRITE L_PAREN . statement R_PAREN
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    statement                      shift and go to state 29
+
+state 26
+
+    (9) writeln -> WRITELN L_PAREN . statement R_PAREN
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    statement                      shift and go to state 35
+
+state 27
+
+    (37) declarations -> IDENTIFIER COMMA . declarations
+    (37) declarations -> . IDENTIFIER COMMA declarations
+    (38) declarations -> . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 24
+
+    declarations                   shift and go to state 36
+
+state 28
+
+    (19) statement -> L_PAREN . statement R_PAREN
+    (20) statement -> L_PAREN . conditional R_PAREN
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+
+    statement                      shift and go to state 37
+    conditional                    shift and go to state 38
+
+state 29
+
+    (8) write -> WRITE L_PAREN statement . R_PAREN
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+    R_PAREN         shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+
+state 30
+
+    (10) statement -> IDENTIFIER .
+
+    R_PAREN         reduce using rule 10 (statement -> IDENTIFIER .)
+    PLUS            reduce using rule 10 (statement -> IDENTIFIER .)
+    MINUS           reduce using rule 10 (statement -> IDENTIFIER .)
+    TIMES           reduce using rule 10 (statement -> IDENTIFIER .)
+    DIVIDE          reduce using rule 10 (statement -> IDENTIFIER .)
+    EQUAL           reduce using rule 10 (statement -> IDENTIFIER .)
+    NOT_EQUAL       reduce using rule 10 (statement -> IDENTIFIER .)
+    GREATER         reduce using rule 10 (statement -> IDENTIFIER .)
+    LESS            reduce using rule 10 (statement -> IDENTIFIER .)
+    GREATER_EQUAL   reduce using rule 10 (statement -> IDENTIFIER .)
+    LESS_EQUAL      reduce using rule 10 (statement -> IDENTIFIER .)
+    AND             reduce using rule 10 (statement -> IDENTIFIER .)
+    OR              reduce using rule 10 (statement -> IDENTIFIER .)
+
+
+state 31
+
+    (15) statement -> INT .
+
+    R_PAREN         reduce using rule 15 (statement -> INT .)
+    PLUS            reduce using rule 15 (statement -> INT .)
+    MINUS           reduce using rule 15 (statement -> INT .)
+    TIMES           reduce using rule 15 (statement -> INT .)
+    DIVIDE          reduce using rule 15 (statement -> INT .)
+    EQUAL           reduce using rule 15 (statement -> INT .)
+    NOT_EQUAL       reduce using rule 15 (statement -> INT .)
+    GREATER         reduce using rule 15 (statement -> INT .)
+    LESS            reduce using rule 15 (statement -> INT .)
+    GREATER_EQUAL   reduce using rule 15 (statement -> INT .)
+    LESS_EQUAL      reduce using rule 15 (statement -> INT .)
+    AND             reduce using rule 15 (statement -> INT .)
+    OR              reduce using rule 15 (statement -> INT .)
+
+
+state 32
+
+    (16) statement -> FLOAT .
+
+    R_PAREN         reduce using rule 16 (statement -> FLOAT .)
+    PLUS            reduce using rule 16 (statement -> FLOAT .)
+    MINUS           reduce using rule 16 (statement -> FLOAT .)
+    TIMES           reduce using rule 16 (statement -> FLOAT .)
+    DIVIDE          reduce using rule 16 (statement -> FLOAT .)
+    EQUAL           reduce using rule 16 (statement -> FLOAT .)
+    NOT_EQUAL       reduce using rule 16 (statement -> FLOAT .)
+    GREATER         reduce using rule 16 (statement -> FLOAT .)
+    LESS            reduce using rule 16 (statement -> FLOAT .)
+    GREATER_EQUAL   reduce using rule 16 (statement -> FLOAT .)
+    LESS_EQUAL      reduce using rule 16 (statement -> FLOAT .)
+    AND             reduce using rule 16 (statement -> FLOAT .)
+    OR              reduce using rule 16 (statement -> FLOAT .)
+
+
+state 33
+
+    (17) statement -> BOOL .
+
+    R_PAREN         reduce using rule 17 (statement -> BOOL .)
+    PLUS            reduce using rule 17 (statement -> BOOL .)
+    MINUS           reduce using rule 17 (statement -> BOOL .)
+    TIMES           reduce using rule 17 (statement -> BOOL .)
+    DIVIDE          reduce using rule 17 (statement -> BOOL .)
+    EQUAL           reduce using rule 17 (statement -> BOOL .)
+    NOT_EQUAL       reduce using rule 17 (statement -> BOOL .)
+    GREATER         reduce using rule 17 (statement -> BOOL .)
+    LESS            reduce using rule 17 (statement -> BOOL .)
+    GREATER_EQUAL   reduce using rule 17 (statement -> BOOL .)
+    LESS_EQUAL      reduce using rule 17 (statement -> BOOL .)
+    AND             reduce using rule 17 (statement -> BOOL .)
+    OR              reduce using rule 17 (statement -> BOOL .)
+
+
+state 34
+
+    (18) statement -> STRING .
+
+    R_PAREN         reduce using rule 18 (statement -> STRING .)
+    PLUS            reduce using rule 18 (statement -> STRING .)
+    MINUS           reduce using rule 18 (statement -> STRING .)
+    TIMES           reduce using rule 18 (statement -> STRING .)
+    DIVIDE          reduce using rule 18 (statement -> STRING .)
+    EQUAL           reduce using rule 18 (statement -> STRING .)
+    NOT_EQUAL       reduce using rule 18 (statement -> STRING .)
+    GREATER         reduce using rule 18 (statement -> STRING .)
+    LESS            reduce using rule 18 (statement -> STRING .)
+    GREATER_EQUAL   reduce using rule 18 (statement -> STRING .)
+    LESS_EQUAL      reduce using rule 18 (statement -> STRING .)
+    AND             reduce using rule 18 (statement -> STRING .)
+    OR              reduce using rule 18 (statement -> STRING .)
+
+
+state 35
+
+    (9) writeln -> WRITELN L_PAREN statement . R_PAREN
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+    R_PAREN         shift and go to state 46
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+
+state 36
+
+    (37) declarations -> IDENTIFIER COMMA declarations .
+
+    SEMICOLON       reduce using rule 37 (declarations -> IDENTIFIER COMMA declarations .)
+
+
+state 37
+
+    (19) statement -> L_PAREN statement . R_PAREN
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+    (31) conditional -> statement .
+
+  ! shift/reduce conflict for R_PAREN resolved as shift
+    R_PAREN         shift and go to state 47
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+    EQUAL           reduce using rule 31 (conditional -> statement .)
+    NOT_EQUAL       reduce using rule 31 (conditional -> statement .)
+    GREATER         reduce using rule 31 (conditional -> statement .)
+    LESS            reduce using rule 31 (conditional -> statement .)
+    GREATER_EQUAL   reduce using rule 31 (conditional -> statement .)
+    LESS_EQUAL      reduce using rule 31 (conditional -> statement .)
+    AND             reduce using rule 31 (conditional -> statement .)
+    OR              reduce using rule 31 (conditional -> statement .)
+
+  ! R_PAREN         [ reduce using rule 31 (conditional -> statement .) ]
+
+
+state 38
+
+    (20) statement -> L_PAREN conditional . R_PAREN
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+    R_PAREN         shift and go to state 48
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+
+state 39
+
+    (29) conditional -> TRUE .
+
+    R_PAREN         reduce using rule 29 (conditional -> TRUE .)
+    EQUAL           reduce using rule 29 (conditional -> TRUE .)
+    NOT_EQUAL       reduce using rule 29 (conditional -> TRUE .)
+    GREATER         reduce using rule 29 (conditional -> TRUE .)
+    LESS            reduce using rule 29 (conditional -> TRUE .)
+    GREATER_EQUAL   reduce using rule 29 (conditional -> TRUE .)
+    LESS_EQUAL      reduce using rule 29 (conditional -> TRUE .)
+    AND             reduce using rule 29 (conditional -> TRUE .)
+    OR              reduce using rule 29 (conditional -> TRUE .)
+
+
+state 40
+
+    (30) conditional -> FALSE .
+
+    R_PAREN         reduce using rule 30 (conditional -> FALSE .)
+    EQUAL           reduce using rule 30 (conditional -> FALSE .)
+    NOT_EQUAL       reduce using rule 30 (conditional -> FALSE .)
+    GREATER         reduce using rule 30 (conditional -> FALSE .)
+    LESS            reduce using rule 30 (conditional -> FALSE .)
+    GREATER_EQUAL   reduce using rule 30 (conditional -> FALSE .)
+    LESS_EQUAL      reduce using rule 30 (conditional -> FALSE .)
+    AND             reduce using rule 30 (conditional -> FALSE .)
+    OR              reduce using rule 30 (conditional -> FALSE .)
+
+
+state 41
+
+    (8) write -> WRITE L_PAREN statement R_PAREN .
+
+    SEMICOLON       reduce using rule 8 (write -> WRITE L_PAREN statement R_PAREN .)
+
+
+state 42
+
+    (11) statement -> statement PLUS . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    statement                      shift and go to state 57
+
+state 43
+
+    (12) statement -> statement MINUS . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    statement                      shift and go to state 58
+
+state 44
+
+    (13) statement -> statement TIMES . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    statement                      shift and go to state 59
+
+state 45
+
+    (14) statement -> statement DIVIDE . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    statement                      shift and go to state 60
+
+state 46
+
+    (9) writeln -> WRITELN L_PAREN statement R_PAREN .
+
+    SEMICOLON       reduce using rule 9 (writeln -> WRITELN L_PAREN statement R_PAREN .)
+
+
+state 47
+
+    (19) statement -> L_PAREN statement R_PAREN .
+
+    R_PAREN         reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    PLUS            reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    MINUS           reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    TIMES           reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    DIVIDE          reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    EQUAL           reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    NOT_EQUAL       reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    GREATER         reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    LESS            reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    GREATER_EQUAL   reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    LESS_EQUAL      reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    AND             reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+    OR              reduce using rule 19 (statement -> L_PAREN statement R_PAREN .)
+
+
+state 48
+
+    (20) statement -> L_PAREN conditional R_PAREN .
+
+    R_PAREN         reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    PLUS            reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    MINUS           reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    TIMES           reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    DIVIDE          reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    EQUAL           reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    NOT_EQUAL       reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    GREATER         reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    LESS            reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    GREATER_EQUAL   reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    LESS_EQUAL      reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    AND             reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+    OR              reduce using rule 20 (statement -> L_PAREN conditional R_PAREN .)
+
+
+state 49
+
+    (21) conditional -> conditional EQUAL . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 61
+    statement                      shift and go to state 62
+
+state 50
+
+    (22) conditional -> conditional NOT_EQUAL . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 63
+    statement                      shift and go to state 62
+
+state 51
+
+    (23) conditional -> conditional GREATER . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 64
+    statement                      shift and go to state 62
+
+state 52
+
+    (24) conditional -> conditional LESS . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 65
+    statement                      shift and go to state 62
+
+state 53
+
+    (25) conditional -> conditional GREATER_EQUAL . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 66
+    statement                      shift and go to state 62
+
+state 54
+
+    (26) conditional -> conditional LESS_EQUAL . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 67
+    statement                      shift and go to state 62
+
+state 55
+
+    (27) conditional -> conditional AND . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 68
+    statement                      shift and go to state 62
+
+state 56
+
+    (28) conditional -> conditional OR . conditional
+    (21) conditional -> . conditional EQUAL conditional
+    (22) conditional -> . conditional NOT_EQUAL conditional
+    (23) conditional -> . conditional GREATER conditional
+    (24) conditional -> . conditional LESS conditional
+    (25) conditional -> . conditional GREATER_EQUAL conditional
+    (26) conditional -> . conditional LESS_EQUAL conditional
+    (27) conditional -> . conditional AND conditional
+    (28) conditional -> . conditional OR conditional
+    (29) conditional -> . TRUE
+    (30) conditional -> . FALSE
+    (31) conditional -> . statement
+    (10) statement -> . IDENTIFIER
+    (11) statement -> . statement PLUS statement
+    (12) statement -> . statement MINUS statement
+    (13) statement -> . statement TIMES statement
+    (14) statement -> . statement DIVIDE statement
+    (15) statement -> . INT
+    (16) statement -> . FLOAT
+    (17) statement -> . BOOL
+    (18) statement -> . STRING
+    (19) statement -> . L_PAREN statement R_PAREN
+    (20) statement -> . L_PAREN conditional R_PAREN
+
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 30
+    INT             shift and go to state 31
+    FLOAT           shift and go to state 32
+    BOOL            shift and go to state 33
+    STRING          shift and go to state 34
+    L_PAREN         shift and go to state 28
+
+    conditional                    shift and go to state 69
+    statement                      shift and go to state 62
+
+state 57
+
+    (11) statement -> statement PLUS statement .
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    R_PAREN         reduce using rule 11 (statement -> statement PLUS statement .)
+    EQUAL           reduce using rule 11 (statement -> statement PLUS statement .)
+    NOT_EQUAL       reduce using rule 11 (statement -> statement PLUS statement .)
+    GREATER         reduce using rule 11 (statement -> statement PLUS statement .)
+    LESS            reduce using rule 11 (statement -> statement PLUS statement .)
+    GREATER_EQUAL   reduce using rule 11 (statement -> statement PLUS statement .)
+    LESS_EQUAL      reduce using rule 11 (statement -> statement PLUS statement .)
+    AND             reduce using rule 11 (statement -> statement PLUS statement .)
+    OR              reduce using rule 11 (statement -> statement PLUS statement .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+  ! PLUS            [ reduce using rule 11 (statement -> statement PLUS statement .) ]
+  ! MINUS           [ reduce using rule 11 (statement -> statement PLUS statement .) ]
+  ! TIMES           [ reduce using rule 11 (statement -> statement PLUS statement .) ]
+  ! DIVIDE          [ reduce using rule 11 (statement -> statement PLUS statement .) ]
+
+
+state 58
+
+    (12) statement -> statement MINUS statement .
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    R_PAREN         reduce using rule 12 (statement -> statement MINUS statement .)
+    EQUAL           reduce using rule 12 (statement -> statement MINUS statement .)
+    NOT_EQUAL       reduce using rule 12 (statement -> statement MINUS statement .)
+    GREATER         reduce using rule 12 (statement -> statement MINUS statement .)
+    LESS            reduce using rule 12 (statement -> statement MINUS statement .)
+    GREATER_EQUAL   reduce using rule 12 (statement -> statement MINUS statement .)
+    LESS_EQUAL      reduce using rule 12 (statement -> statement MINUS statement .)
+    AND             reduce using rule 12 (statement -> statement MINUS statement .)
+    OR              reduce using rule 12 (statement -> statement MINUS statement .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+  ! PLUS            [ reduce using rule 12 (statement -> statement MINUS statement .) ]
+  ! MINUS           [ reduce using rule 12 (statement -> statement MINUS statement .) ]
+  ! TIMES           [ reduce using rule 12 (statement -> statement MINUS statement .) ]
+  ! DIVIDE          [ reduce using rule 12 (statement -> statement MINUS statement .) ]
+
+
+state 59
+
+    (13) statement -> statement TIMES statement .
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    R_PAREN         reduce using rule 13 (statement -> statement TIMES statement .)
+    EQUAL           reduce using rule 13 (statement -> statement TIMES statement .)
+    NOT_EQUAL       reduce using rule 13 (statement -> statement TIMES statement .)
+    GREATER         reduce using rule 13 (statement -> statement TIMES statement .)
+    LESS            reduce using rule 13 (statement -> statement TIMES statement .)
+    GREATER_EQUAL   reduce using rule 13 (statement -> statement TIMES statement .)
+    LESS_EQUAL      reduce using rule 13 (statement -> statement TIMES statement .)
+    AND             reduce using rule 13 (statement -> statement TIMES statement .)
+    OR              reduce using rule 13 (statement -> statement TIMES statement .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+  ! PLUS            [ reduce using rule 13 (statement -> statement TIMES statement .) ]
+  ! MINUS           [ reduce using rule 13 (statement -> statement TIMES statement .) ]
+  ! TIMES           [ reduce using rule 13 (statement -> statement TIMES statement .) ]
+  ! DIVIDE          [ reduce using rule 13 (statement -> statement TIMES statement .) ]
+
+
+state 60
+
+    (14) statement -> statement DIVIDE statement .
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    R_PAREN         reduce using rule 14 (statement -> statement DIVIDE statement .)
+    EQUAL           reduce using rule 14 (statement -> statement DIVIDE statement .)
+    NOT_EQUAL       reduce using rule 14 (statement -> statement DIVIDE statement .)
+    GREATER         reduce using rule 14 (statement -> statement DIVIDE statement .)
+    LESS            reduce using rule 14 (statement -> statement DIVIDE statement .)
+    GREATER_EQUAL   reduce using rule 14 (statement -> statement DIVIDE statement .)
+    LESS_EQUAL      reduce using rule 14 (statement -> statement DIVIDE statement .)
+    AND             reduce using rule 14 (statement -> statement DIVIDE statement .)
+    OR              reduce using rule 14 (statement -> statement DIVIDE statement .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+  ! PLUS            [ reduce using rule 14 (statement -> statement DIVIDE statement .) ]
+  ! MINUS           [ reduce using rule 14 (statement -> statement DIVIDE statement .) ]
+  ! TIMES           [ reduce using rule 14 (statement -> statement DIVIDE statement .) ]
+  ! DIVIDE          [ reduce using rule 14 (statement -> statement DIVIDE statement .) ]
+
+
+state 61
+
+    (21) conditional -> conditional EQUAL conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 21 (conditional -> conditional EQUAL conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! GREATER         [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! LESS            [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! AND             [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+  ! OR              [ reduce using rule 21 (conditional -> conditional EQUAL conditional .) ]
+
+
+state 62
+
+    (31) conditional -> statement .
+    (11) statement -> statement . PLUS statement
+    (12) statement -> statement . MINUS statement
+    (13) statement -> statement . TIMES statement
+    (14) statement -> statement . DIVIDE statement
+
+    EQUAL           reduce using rule 31 (conditional -> statement .)
+    NOT_EQUAL       reduce using rule 31 (conditional -> statement .)
+    GREATER         reduce using rule 31 (conditional -> statement .)
+    LESS            reduce using rule 31 (conditional -> statement .)
+    GREATER_EQUAL   reduce using rule 31 (conditional -> statement .)
+    LESS_EQUAL      reduce using rule 31 (conditional -> statement .)
+    AND             reduce using rule 31 (conditional -> statement .)
+    OR              reduce using rule 31 (conditional -> statement .)
+    R_PAREN         reduce using rule 31 (conditional -> statement .)
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 43
+    TIMES           shift and go to state 44
+    DIVIDE          shift and go to state 45
+
+
+state 63
+
+    (22) conditional -> conditional NOT_EQUAL conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! GREATER         [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! LESS            [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! AND             [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+  ! OR              [ reduce using rule 22 (conditional -> conditional NOT_EQUAL conditional .) ]
+
+
+state 64
+
+    (23) conditional -> conditional GREATER conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 23 (conditional -> conditional GREATER conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! GREATER         [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! LESS            [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! AND             [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+  ! OR              [ reduce using rule 23 (conditional -> conditional GREATER conditional .) ]
+
+
+state 65
+
+    (24) conditional -> conditional LESS conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 24 (conditional -> conditional LESS conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! GREATER         [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! LESS            [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! AND             [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+  ! OR              [ reduce using rule 24 (conditional -> conditional LESS conditional .) ]
+
+
+state 66
+
+    (25) conditional -> conditional GREATER_EQUAL conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! GREATER         [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! LESS            [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! AND             [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+  ! OR              [ reduce using rule 25 (conditional -> conditional GREATER_EQUAL conditional .) ]
+
+
+state 67
+
+    (26) conditional -> conditional LESS_EQUAL conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! GREATER         [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! LESS            [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! AND             [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+  ! OR              [ reduce using rule 26 (conditional -> conditional LESS_EQUAL conditional .) ]
+
+
+state 68
+
+    (27) conditional -> conditional AND conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 27 (conditional -> conditional AND conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! GREATER         [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! LESS            [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! AND             [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+  ! OR              [ reduce using rule 27 (conditional -> conditional AND conditional .) ]
+
+
+state 69
+
+    (28) conditional -> conditional OR conditional .
+    (21) conditional -> conditional . EQUAL conditional
+    (22) conditional -> conditional . NOT_EQUAL conditional
+    (23) conditional -> conditional . GREATER conditional
+    (24) conditional -> conditional . LESS conditional
+    (25) conditional -> conditional . GREATER_EQUAL conditional
+    (26) conditional -> conditional . LESS_EQUAL conditional
+    (27) conditional -> conditional . AND conditional
+    (28) conditional -> conditional . OR conditional
+
+  ! shift/reduce conflict for EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    R_PAREN         reduce using rule 28 (conditional -> conditional OR conditional .)
+    EQUAL           shift and go to state 49
+    NOT_EQUAL       shift and go to state 50
+    GREATER         shift and go to state 51
+    LESS            shift and go to state 52
+    GREATER_EQUAL   shift and go to state 53
+    LESS_EQUAL      shift and go to state 54
+    AND             shift and go to state 55
+    OR              shift and go to state 56
+
+  ! EQUAL           [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! NOT_EQUAL       [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! GREATER         [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! LESS            [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! GREATER_EQUAL   [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! LESS_EQUAL      [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! AND             [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+  ! OR              [ reduce using rule 28 (conditional -> conditional OR conditional .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for WRITE in state 4 resolved as shift
+WARNING: shift/reduce conflict for WRITELN in state 4 resolved as shift
+WARNING: shift/reduce conflict for INT in state 4 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 4 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 4 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 4 resolved as shift
+WARNING: shift/reduce conflict for R_BRACE in state 5 resolved as shift
+WARNING: shift/reduce conflict for WRITE in state 5 resolved as shift
+WARNING: shift/reduce conflict for WRITELN in state 5 resolved as shift
+WARNING: shift/reduce conflict for INT in state 5 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 5 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 5 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 5 resolved as shift
+WARNING: shift/reduce conflict for R_PAREN in state 37 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 57 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 57 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 57 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 57 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 58 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 58 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 58 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 58 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 59 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 59 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 60 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 60 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 60 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 60 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 61 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 61 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 61 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 61 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 61 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 61 resolved as shift
+WARNING: shift/reduce conflict for AND in state 61 resolved as shift
+WARNING: shift/reduce conflict for OR in state 61 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 63 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 63 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 63 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 63 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 63 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 63 resolved as shift
+WARNING: shift/reduce conflict for AND in state 63 resolved as shift
+WARNING: shift/reduce conflict for OR in state 63 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 64 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 64 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 64 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 64 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 64 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 64 resolved as shift
+WARNING: shift/reduce conflict for AND in state 64 resolved as shift
+WARNING: shift/reduce conflict for OR in state 64 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 65 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 65 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 65 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 65 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 65 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 65 resolved as shift
+WARNING: shift/reduce conflict for AND in state 65 resolved as shift
+WARNING: shift/reduce conflict for OR in state 65 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 66 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 66 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 66 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 66 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 66 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 66 resolved as shift
+WARNING: shift/reduce conflict for AND in state 66 resolved as shift
+WARNING: shift/reduce conflict for OR in state 66 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 67 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 67 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 67 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 67 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 67 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 67 resolved as shift
+WARNING: shift/reduce conflict for AND in state 67 resolved as shift
+WARNING: shift/reduce conflict for OR in state 67 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 68 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 68 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 68 resolved as shift
+WARNING: shift/reduce conflict for AND in state 68 resolved as shift
+WARNING: shift/reduce conflict for OR in state 68 resolved as shift
+WARNING: shift/reduce conflict for EQUAL in state 69 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 69 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 69 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 69 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 69 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 69 resolved as shift
+WARNING: shift/reduce conflict for AND in state 69 resolved as shift
+WARNING: shift/reduce conflict for OR in state 69 resolved as shift

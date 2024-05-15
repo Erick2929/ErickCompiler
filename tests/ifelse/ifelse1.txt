@@ -1,0 +1,9 @@
+program main {
+    int x = 10;
+    int y = 20;
+    if (x > y) {
+        writeln(x, " es mayor que ", y);
+    } else {
+        writeln(y, " es mayor o igual que ", x);
+    }
+}

@@ -1,0 +1,5 @@
+program main{
+    write("Hello World no ln");
+    writeln("Hello World ln");
+    write("Hello World no ln");
+}
