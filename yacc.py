@@ -1,13 +1,21 @@
+from lexer import tokens
+
 # Erick Siller Ojeda A01382929
 # Basado en la documentación de PLY: https://www.dabeaz.com/ply/ply.html#ply_nn0
 # ----------------------------------------------------------------------------------------------------------
 import ply.yacc as yacc
-from lexer import tokens
 
-memoriaVariables = {}
+memoriaVariables = {}  # Diccionario para almacenar las variables
 
+precedence = (
+    ("left", "PLUS", "MINUS"),
+    ("left", "TIMES", "DIVIDE", "AND", "OR"),
+    ("nonassoc", "L_PAREN", "R_PAREN"),
+)
 
 # ------------------ Program structure ------------------
+
+
 def p_init(p):
     "program : PROGRAM MAIN L_BRACE expressions R_BRACE"
     for e in p[4]:
@@ -17,6 +25,8 @@ def p_init(p):
 
 
 # ------------------ Expressions ------------------
+
+
 def p_expressions(p):
     "expressions : expressions expression"
     p[1].append(p[2])
@@ -33,7 +43,10 @@ def p_expression(p):
     expression : var_declaration SEMICOLON
                | write SEMICOLON
                | writeln SEMICOLON
+               | statement SEMICOLON
+               | if_else_statement
                | for_loop
+               | while_loop
                | empty
     """
     p[0] = p[1]
@@ -85,19 +98,19 @@ def p_statement_parenthesis(p):
     p[0] = p[2]
 
 
-# incremento con el ++
 def p_statement_increment(p):
     "statement : IDENTIFIER INCREMENT"
     p[0] = ("VAR_ASSIGN", p[1], ("+", ("VAR", p[1]), 1))
 
 
-# decremento con el --
 def p_statement_decrement(p):
     "statement : IDENTIFIER DECREMENT"
     p[0] = ("VAR_ASSIGN", p[1], ("-", ("VAR", p[1]), 1))
 
 
 # ------------------ definicion de conditional ------------------
+
+
 def p_conditional(p):
     """
     conditional : conditional EQUAL conditional
@@ -123,11 +136,32 @@ def p_conditional(p):
 
 def p_for_loop(p):
     "for_loop : FOR L_PAREN var_declaration SEMICOLON conditional SEMICOLON statement R_PAREN L_BRACE expressions R_BRACE"
-    # print(p)
     p[0] = ("FOR", [p[3], p[5], p[7]], p[10])
 
 
-# ------------------ Variable declaration ------------------
+# ------------------ definicion de while loop ------------------
+
+
+def p_while_loop(p):
+    "while_loop : WHILE L_PAREN conditional R_PAREN L_BRACE expressions R_BRACE"
+    p[0] = ("WHILE", p[3], p[6])
+
+
+# ------------------ definicion de if else statement ------------------
+
+
+def p_if_else_statement(p):
+    """
+    if_else_statement : IF L_PAREN conditional R_PAREN L_BRACE expressions R_BRACE ELSE L_BRACE expressions R_BRACE
+                      | IF L_PAREN conditional R_PAREN L_BRACE expressions R_BRACE
+    """
+    if len(p) == 12:
+        p[0] = ("IF", p[3], p[6], p[10])
+    else:
+        p[0] = ("IF", p[3], p[6])
+
+
+# ------------------ Definicion de Variable declaration ------------------
 
 
 def p_variable_declaration(p):
@@ -157,25 +191,17 @@ def p_declarations(p):
         p[0] = [p[1]]
 
 
-# ------------------ Variable assignment ------------------
+# ------------------ definicion de Variable assignment ------------------
+
+
 def p_assignment(p):
     "var_declaration : IDENTIFIER ASSIGN statement"
     p[0] = ("VAR_ASSIGN", p[1], p[3])
 
 
-# def p_expression(p):
-#     """
-#     expression : var_declaration
-#                | if_statement
-#                | for_loop
-#                | while_loop
-#                | print
-#                | empty
-#     """
-#     p[0] = p[1]
+# ------------------------- definicion de expresion vacia -------------------------
 
 
-# ------------------------- expresion vacia -------------------------
 def p_empty(p):
     """
     empty :
@@ -184,6 +210,8 @@ def p_empty(p):
 
 
 # ------------------ Error handling ------------------
+
+
 def p_error(p):
     if p:
         raise SyntaxError(
@@ -195,7 +223,7 @@ def p_error(p):
 
 parser = yacc.yacc()
 
-# ------------------ rule functions -----------------------
+# ------------------ funciones -----------------------
 
 
 def binary_operations(p):
@@ -220,25 +248,18 @@ def binary_operations(p):
     elif p[0] == "<=":
         return program_driver(p[1]) <= program_driver(p[2])
     elif p[0] == "and":
-        # if type(p[1]).__name__ == "int" or type(p[2]).__name__ == "int":
-        #     raise RuntimeError("Illegal AND evaluation")
-        # else:
         return program_driver(p[1]) and program_driver(p[2])
     elif p[0] == "or":
-        # if type(p[1]).__name__ == "int" or type(p[2]).__name__ == "int":
-        #     raise RuntimeError("Illegal OR evaluation")
-        # else:
         return program_driver(p[1]) or program_driver(p[2])
 
 
-# ------------------ Variables ------------------
+# ------------------ asignacion de variables ------------------
 
 
 def variable_assignment(p):
     if p[1] not in memoriaVariables:
         raise NameError("'%s' no esta declarado" % (p[1]))
     value = program_driver(p[2])
-    # hacemos la excepcion de que si es un string, le ponemos el nombre de "string" en vez de "str"
     if type(value).__name__ == "str":
         dataType = "string"
     else:
@@ -246,7 +267,6 @@ def variable_assignment(p):
 
     if dataType == memoriaVariables[p[1]]["dataType"]:
         if type(value) == str:
-            # agregamos las comillas a los strings
             memoriaVariables[p[1]]["value"] = value.strip('"')
         else:
             memoriaVariables[p[1]]["value"] = value
@@ -290,16 +310,12 @@ def variable_value(p):
     return memoriaVariables[p[1]]["value"]
 
 
-# ------------------ functions ------------------
+# ------------------ executable functions ------------------
 
 
-# Excute blocks of code
 def execute(expressions):
     for e in expressions:
         program_driver(e)
-
-
-# ejecucion del for loop
 
 
 def for_loop(p):
@@ -311,6 +327,46 @@ def for_loop(p):
         condition = program_driver(p[1][1])
 
 
+def while_loop(p):
+    if type(p[1]) != str and len(p[1]) < 3:
+        while program_driver(p[1]):
+            execute(p[2])
+    else:
+        operator = p[1][0]
+        while program_driver(
+            (operator, program_driver(p[1][1]), program_driver(p[1][2]))
+        ):
+            execute(p[2])
+
+
+def if_else_statement(p):
+    if len(p[1]) == 3:
+        operator = p[1][0]
+        left = p[1][1]
+        right = p[1][2]
+        condition = program_driver(
+            (operator, program_driver(left), program_driver(right))
+        )
+        if len(p) == 3:
+            if condition:
+                return execute(p[2])
+        else:
+            if condition:
+                return execute(p[2])
+            else:
+                return execute(p[3])
+    else:
+        condition = program_driver(p[1])
+        if len(p) == 3:
+            if condition:
+                return execute(p[2])
+        else:
+            if condition:
+                return execute(p[2])
+            else:
+                return execute(p[3])
+
+
 def write_function(p):
     print(program_driver(p[1]), end="")
 
@@ -319,9 +375,7 @@ def writeln_function(p):
     print(program_driver(p[1]))
 
 
-# MAIN DRIVER: Parse any input and run as it if was a program
 def program_driver(p):
-    # print("Tuplas: ", p)
     if type(p) == tuple:
         operators = ["+", "-", "*", "/", "==", "!=", ">", "<", ">=", "<=", "and", "or"]
         if p[0] in operators:
@@ -332,12 +386,12 @@ def program_driver(p):
             return variable_declaration(p)
         elif p[0] == "VAR":
             return variable_value(p)
-        # elif p[0] == "IF":
-        #     return if_else_statement(p)
+        elif p[0] == "IF":
+            return if_else_statement(p)
         elif p[0] == "FOR":
             return for_loop(p)
-        # elif p[0] == "WHILE":
-        #     return while_loop(p)
+        elif p[0] == "WHILE":
+            return while_loop(p)
         elif p[0] == "WRITE":
             return write_function(p)
         elif p[0] == "WRITELN":
@@ -346,7 +400,6 @@ def program_driver(p):
         return p
 
 
-with open("tests/for/for1.txt", "r") as file:
+with open("tests/while/while.txt", "r") as file:
     s = file.read()
     result = parser.parse(s)
-    # print(memoriaVariables)

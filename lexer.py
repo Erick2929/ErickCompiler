@@ -140,7 +140,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-with open("tests/variables/var.txt", "r") as file:
+with open("tests/while/test.txt", "r") as file:
     data = file.read()
 
 lexer.input(data)

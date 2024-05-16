@@ -1,0 +1,16 @@
+program main{
+	int i;
+    i = 0;
+	writeln(i);
+    i = 1;
+    writeln(i);
+    i = 2;
+    writeln(i);
+    i--;
+    writeln(i);
+    i--;
+    writeln(i);
+    i--;
+    writeln(i);
+}
+
