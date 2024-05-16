@@ -1,5 +1,5 @@
 program main{
     string zx;
-    write("hello");
-    //zx = "hello";
+    zx = "hello";
+    write(zx);
 }

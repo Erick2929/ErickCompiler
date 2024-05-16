@@ -33,6 +33,7 @@ def p_expression(p):
     expression : var_declaration SEMICOLON
                | write SEMICOLON
                | writeln SEMICOLON
+               | for_loop
                | empty
     """
     p[0] = p[1]
@@ -84,6 +85,18 @@ def p_statement_parenthesis(p):
     p[0] = p[2]
 
 
+# incremento con el ++
+def p_statement_increment(p):
+    "statement : IDENTIFIER INCREMENT"
+    p[0] = ("VAR_ASSIGN", p[1], ("+", ("VAR", p[1]), 1))
+
+
+# decremento con el --
+def p_statement_decrement(p):
+    "statement : IDENTIFIER DECREMENT"
+    p[0] = ("VAR_ASSIGN", p[1], ("-", ("VAR", p[1]), 1))
+
+
 # ------------------ definicion de conditional ------------------
 def p_conditional(p):
     """
@@ -103,6 +116,15 @@ def p_conditional(p):
         p[0] = (p[2], p[1], p[3])
     else:
         p[0] = p[1]
+
+
+# ------------------ definicion de for loop ------------------
+
+
+def p_for_loop(p):
+    "for_loop : FOR L_PAREN var_declaration SEMICOLON conditional SEMICOLON statement R_PAREN L_BRACE expressions R_BRACE"
+    # print(p)
+    p[0] = ("FOR", [p[3], p[5], p[7]], p[10])
 
 
 # ------------------ Variable declaration ------------------
@@ -133,6 +155,12 @@ def p_declarations(p):
         p[0] = p[3]
     else:
         p[0] = [p[1]]
+
+
+# ------------------ Variable assignment ------------------
+def p_assignment(p):
+    "var_declaration : IDENTIFIER ASSIGN statement"
+    p[0] = ("VAR_ASSIGN", p[1], p[3])
 
 
 # def p_expression(p):
@@ -266,17 +294,29 @@ def variable_value(p):
 
 
 # Excute blocks of code
-# def execute(expressions):
-#     for e in expressions:
-#         program_driver(e)
+def execute(expressions):
+    for e in expressions:
+        program_driver(e)
+
+
+# ejecucion del for loop
+
+
+def for_loop(p):
+    init = program_driver(p[1][0])
+    condition = program_driver(p[1][1])
+    while condition:
+        execute(p[2])
+        program_driver(p[1][2])
+        condition = program_driver(p[1][1])
 
 
 def write_function(p):
-    print(program_driver(p[1]))
+    print(program_driver(p[1]), end="")
 
 
 def writeln_function(p):
-    print(program_driver(p[1]) + "\n")
+    print(program_driver(p[1]))
 
 
 # MAIN DRIVER: Parse any input and run as it if was a program
@@ -286,7 +326,7 @@ def program_driver(p):
         operators = ["+", "-", "*", "/", "==", "!=", ">", "<", ">=", "<=", "and", "or"]
         if p[0] in operators:
             return binary_operations(p)
-        elif p[0] == "VAR_ASSING":
+        elif p[0] == "VAR_ASSIGN":
             return variable_assignment(p)
         elif p[0] == "VAR_DECLARATION":
             return variable_declaration(p)
@@ -294,8 +334,8 @@ def program_driver(p):
             return variable_value(p)
         # elif p[0] == "IF":
         #     return if_else_statement(p)
-        # elif p[0] == "FOR":
-        #     return for_loop(p)
+        elif p[0] == "FOR":
+            return for_loop(p)
         # elif p[0] == "WHILE":
         #     return while_loop(p)
         elif p[0] == "WRITE":
@@ -306,7 +346,7 @@ def program_driver(p):
         return p
 
 
-with open("tests/variables/var.txt", "r") as file:
+with open("tests/for/for1.txt", "r") as file:
     s = file.read()
     result = parser.parse(s)
     # print(memoriaVariables)
