@@ -1,43 +1,46 @@
 # Erick Siller Ojeda A01382929
 # Basado en la documentación de PLY: https://www.dabeaz.com/ply/ply.html#ply_nn0
 # ----------------------------------------------------------------------------------------------------------
+
 import ply.lex as lex
 
+# Palabras reservadas del lenguaje
 reserved = {
-    # palabras de inicializacion
+    # Palabras de inicialización
     "program": "PROGRAM",
     "main": "MAIN",
-    # condicionales
+    # Condicionales
     "if": "IF",
     "else": "ELSE",
-    # ciclos
+    # Ciclos
     "for": "FOR",
     "while": "WHILE",
-    # funciones print
+    # Funciones print
     "write": "WRITE",
     "writeln": "WRITELN",
-    # tipos de datos
+    # Tipos de datos
     "int": "INT",
     "float": "FLOAT",
     "bool": "BOOL",
     "string": "STRING",
-    # valores booleanos
+    # Valores booleanos
     "true": "TRUE",
     "false": "FALSE",
-    # operadores logicos
+    # Operadores lógicos
     "and": "AND",
     "or": "OR",
     "not": "NOT",
-    # retorno de funciones
+    # Retorno de funciones
     "return": "RETURN",
 }
 
+# Lista de tokens
 tokens = [
     # Inicio
     "IDENTIFIER",
     # Variables
     "ASSIGN",
-    # Simbolos
+    # Símbolos
     "PLUS",
     "MINUS",
     "TIMES",
@@ -45,18 +48,18 @@ tokens = [
     "MODULO",
     "INCREMENT",
     "DECREMENT",
-    # Operadores de comparacion
+    # Operadores de comparación
     "EQUAL",
     "NOT_EQUAL",
     "GREATER",
     "LESS",
     "GREATER_EQUAL",
     "LESS_EQUAL",
-    # Operadores logicos
+    # Operadores lógicos
     "LOGICAL_AND",
     "LOGICAL_OR",
     "LOGICAL_NOT",
-    # Simbolos especiales
+    # Símbolos especiales
     "SEMICOLON",
     "COLON",
     "COMMA",
@@ -68,6 +71,7 @@ tokens = [
     "R_BRACKET",
 ] + list(reserved.values())
 
+# Expresiones regulares para los tokens
 t_ASSIGN = r"="
 t_PLUS = r"\+"
 t_MINUS = r"-"
@@ -96,58 +100,67 @@ t_L_BRACKET = r"\["
 t_R_BRACKET = r"\]"
 
 
+# Token para identificadores
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
-    t.type = reserved.get(t.value, t.type)
+    t.type = reserved.get(t.value, t.type)  # Verifica si es una palabra reservada
     return t
 
 
+# Token para números enteros
 def t_INT(t):
     r"\d+"
     t.value = int(t.value)
     return t
 
 
+# Token para números de punto flotante
 def t_FLOAT(t):
     r"\d+\.\d*"
     t.value = float(t.value)
     return t
 
 
+# Token para cadenas de texto
 def t_STRING(t):
     r'"(?:\\"|.)*?"'
     t.value = str(t.value)
     return t
 
 
+# Token para saltos de línea
 def t_newline(t):
     r"\n+"
     t.lexer.lineno += len(t.value)
 
 
+# Ignorar espacios y tabulaciones
 t_ignore = " \t"
 
 
+# Ignorar comentarios
 def t_comment(t):
     r"//.*"
     pass
 
 
+# Manejo de errores
 def t_error(t):
     print(f"Illegal character '{t.value[0]}' at line {t.lineno}")
     t.lexer.skip(1)
 
 
+# Crear el lexer
 lexer = lex.lex()
 
+# Leer el archivo de entrada
 with open("tests/while/test.txt", "r") as file:
     data = file.read()
 
+# Inicializar el lexer con los datos de entrada
 lexer.input(data)
 
-# Tokenize
-
-
+# Tokenizar el código de entrada
 # while True:
 #     tok = lexer.token()
 #     if not tok:

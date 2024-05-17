@@ -400,6 +400,6 @@ def program_driver(p):
         return p
 
 
-with open("tests/while/while.txt", "r") as file:
+with open("tests/writes/write.txt", "r") as file:
     s = file.read()
     result = parser.parse(s)
