@@ -1,0 +1,13 @@
+program main{
+	int hola;
+	hola = 0;
+	if(hola == 0){
+		writeln("hola es 0");
+	}
+	else if(hola == 2){
+		writeln("hola es 2");
+	}
+	else{
+		writeln("hola es otra cosa");
+	}
+}

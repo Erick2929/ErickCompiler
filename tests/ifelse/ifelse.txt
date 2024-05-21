@@ -4,7 +4,7 @@ program main{
 	writeln("texto dump");
 	f = 1;
 	x = 5;
-	if ( x > f) 
+	if (x > f) 
 	{
 		n = x + f;
 	}else

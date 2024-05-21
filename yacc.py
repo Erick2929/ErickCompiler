@@ -79,6 +79,17 @@ def p_statement(p):
               | statement MINUS statement
               | statement TIMES statement
               | statement DIVIDE statement
+              | statement MODULO statement
+              | statement EQUAL statement
+              | statement NOT_EQUAL statement
+              | statement GREATER statement
+              | statement LESS statement
+              | statement GREATER_EQUAL statement
+              | statement LESS_EQUAL statement
+              | statement AND statement
+              | statement OR statement
+              | statement LOGICAL_AND statement
+              | statement LOGICAL_OR statement
               | INT
               | FLOAT
               | BOOL
@@ -120,9 +131,9 @@ def p_conditional(p):
                 | conditional GREATER_EQUAL conditional
                 | conditional LESS_EQUAL conditional
                 | conditional AND conditional
+                | conditional LOGICAL_AND conditional
                 | conditional OR conditional
-                | TRUE
-                | FALSE
+                | conditional LOGICAL_OR conditional
                 | statement
     """
     if len(p) == 4:
@@ -233,6 +244,8 @@ def binary_operations(p):
         return program_driver(p[1]) - program_driver(p[2])
     elif p[0] == "*":
         return program_driver(p[1]) * program_driver(p[2])
+    elif p[0] == "%":
+        return program_driver(p[1]) % program_driver(p[2])
     elif p[0] == "/":
         return program_driver(p[1]) / program_driver(p[2])
     elif p[0] == "==":
@@ -250,6 +263,10 @@ def binary_operations(p):
     elif p[0] == "and":
         return program_driver(p[1]) and program_driver(p[2])
     elif p[0] == "or":
+        return program_driver(p[1]) or program_driver(p[2])
+    elif p[0] == "&&":
+        return program_driver(p[1]) and program_driver(p[2])
+    elif p[0] == "||":
         return program_driver(p[1]) or program_driver(p[2])
 
 
@@ -276,23 +293,23 @@ def variable_assignment(p):
                 memoriaVariables[p[1]]["value"] = float(value)
             else:
                 raise TypeError(
-                    "El valor asignado no es de tipo 'int' en la variable de tipo '%s'"
-                    % (dataType)
+                    "La variable es de tipo '%s' y fue asignado un valor de tipo 'int'"
+                    % (memoriaVariables[p[1]]["dataType"])
                 )
         elif dataType == "float":
             raise TypeError(
-                "El valor asignado no es de tipo 'float' en la variable de tipo '%s'"
-                % (dataType)
+                "La variable es de tipo '%s' y fue asignado un valor de tipo 'float'"
+                % (memoriaVariables[p[1]]["dataType"])
             )
         elif dataType == "string":
             raise TypeError(
-                "El valor asignado no es de tipo 'string' en la variable de tipo '%s'"
-                % (dataType)
+                "La variable es de tipo '%s' y fue asignado un valor de tipo 'string'"
+                % (memoriaVariables[p[1]]["dataType"])
             )
         elif dataType == "bool":
             raise TypeError(
-                "El valor asignado no es de tipo 'bool' en la variable de tipo '%s'"
-                % (dataType)
+                "La variable es de tipo '%s' y fue asignado un valor de tipo 'bool'"
+                % (memoriaVariables[p[1]]["dataType"])
             )
 
 
@@ -308,9 +325,6 @@ def variable_value(p):
     if memoriaVariables[p[1]]["value"] == None:
         raise NameError("'%s' no esta definido" % (p[1]))
     return memoriaVariables[p[1]]["value"]
-
-
-# ------------------ executable functions ------------------
 
 
 def execute(expressions):
@@ -340,6 +354,15 @@ def while_loop(p):
 
 
 def if_else_statement(p):
+
+    if type(p[1]).__name__ == "bool":
+        if p[1] == True:
+            return execute(p[2])
+        elif p[1] == False and len(p) == 4:
+            return execute(p[3])
+        else:
+            return
+
     if len(p[1]) == 3:
         operator = p[1][0]
         left = p[1][1]
@@ -377,7 +400,23 @@ def writeln_function(p):
 
 def program_driver(p):
     if type(p) == tuple:
-        operators = ["+", "-", "*", "/", "==", "!=", ">", "<", ">=", "<=", "and", "or"]
+        operators = [
+            "+",
+            "-",
+            "*",
+            "/",
+            "%",
+            "==",
+            "!=",
+            ">",
+            "<",
+            ">=",
+            "<=",
+            "and",
+            "or",
+            "&&",
+            "||",
+        ]
         if p[0] in operators:
             return binary_operations(p)
         elif p[0] == "VAR_ASSIGN":
@@ -400,6 +439,6 @@ def program_driver(p):
         return p
 
 
-with open("tests/writes/write.txt", "r") as file:
+with open("tests/while/test1.txt", "r") as file:
     s = file.read()
     result = parser.parse(s)

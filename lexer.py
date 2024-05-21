@@ -23,9 +23,8 @@ reserved = {
     "float": "FLOAT",
     "bool": "BOOL",
     "string": "STRING",
-    # Valores booleanos
-    "true": "TRUE",
-    "false": "FALSE",
+    "char": "CHAR",
+    "double": "DOUBLE",
     # Operadores lógicos
     "and": "AND",
     "or": "OR",
@@ -100,6 +99,15 @@ t_L_BRACKET = r"\["
 t_R_BRACKET = r"\]"
 
 
+def t_BOOL(t):
+    r"true|false"
+    if t.value == "true":
+        t.value = True
+    else:
+        t.value = False
+    return t
+
+
 # Token para identificadores
 def t_IDENTIFIER(t):
     r"[a-zA-Z_][a-zA-Z_0-9]*"
@@ -107,23 +115,35 @@ def t_IDENTIFIER(t):
     return t
 
 
-# Token para números enteros
-def t_INT(t):
-    r"\d+"
-    t.value = int(t.value)
+# Token para números de punto flotante
+def t_FLOAT(t):
+    r"\d+\.\d+f?"
+    t.value = float(t.value[:-1] if t.value[-1].lower() == "f" else t.value)
     return t
 
 
-# Token para números de punto flotante
-def t_FLOAT(t):
-    r"\d+\.\d*"
+def t_DOUBLE(t):
+    r"\d+\.\d+"
     t.value = float(t.value)
+    return t
+
+
+# Token para números enteros
+def t_INT(t):
+    r"-?\d+"
+    t.value = int(t.value)
     return t
 
 
 # Token para cadenas de texto
 def t_STRING(t):
     r'"(?:\\"|.)*?"'
+    t.value = str(t.value)
+    return t
+
+
+def t_CHAR(t):
+    r"'.'"
     t.value = str(t.value)
     return t
 
@@ -154,13 +174,15 @@ def t_error(t):
 lexer = lex.lex()
 
 # Leer el archivo de entrada
-with open("tests/while/test.txt", "r") as file:
+with open("tests/while/test1.txt", "r") as file:
     data = file.read()
 
 # Inicializar el lexer con los datos de entrada
 lexer.input(data)
 
 # Tokenizar el código de entrada
+
+
 # while True:
 #     tok = lexer.token()
 #     if not tok:

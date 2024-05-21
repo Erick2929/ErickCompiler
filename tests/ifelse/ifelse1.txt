@@ -1,9 +1,16 @@
-program main {
-    int x = 10;
-    int y = 20;
-    if (x > y) {
-        writeln(x, " es mayor que ", y);
+program main{
+    int score;
+    score = 85;
+
+    if (score >= 90) {
+        writeln("Calificación: A");
+    } else if (score >= 80) {
+        writeln("Calificación: B");
+    } else if (score >= 70) {
+        writeln("Calificación: C");
+    } else if (score >= 60) {
+        writeln("Calificación: D");
     } else {
-        writeln(y, " es mayor o igual que ", x);
+        writeln("Calificación: F");
     }
 }

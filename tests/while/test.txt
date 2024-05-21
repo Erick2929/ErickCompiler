@@ -1,16 +1,18 @@
 program main{
-	int i;
-    i = 0;
-	writeln(i);
-    i = 1;
-    writeln(i);
-    i = 2;
-    writeln(i);
-    i--;
-    writeln(i);
-    i--;
-    writeln(i);
-    i--;
-    writeln(i);
-}
+    int a, b, c;
+    a = 10;
+    b = 10;
 
+    c = a + b;
+    write("La suma es: ");
+    writeln(c);
+
+    if (c > 20) {
+        writeln("c es mayor que 20");
+    } else if( c == 20 ) {
+        writeln("c es igual a 20");
+    }
+    else {
+        writeln("c no es mayor que 20");
+    }
+}
