@@ -237,12 +237,28 @@ parser = yacc.yacc()
 # ------------------ funciones -----------------------
 
 
+# fiuncion de operaciones binarias validas
+def isValidBinaryOperation(operator, type1, type2):
+    aritmethicOperators = ["+", "-", "*", "/", "%"]
+    if operator in aritmethicOperators:
+        if type1 == "str" or type2 == "str":
+            raise TypeError(
+                "Error: tipo de operacion binaria no aceptado:  {} %s {}".format(
+                    type1, type2
+                )
+                % (operator)
+            )
+
+
 def binary_operations(p):
     if p[0] == "+":
         return program_driver(p[1]) + program_driver(p[2])
     elif p[0] == "-":
         return program_driver(p[1]) - program_driver(p[2])
     elif p[0] == "*":
+        type1 = type(program_driver(p[1])).__name__
+        type2 = type(program_driver(p[2])).__name__
+        isValidBinaryOperation("*", type1, type2)
         return program_driver(p[1]) * program_driver(p[2])
     elif p[0] == "%":
         return program_driver(p[1]) % program_driver(p[2])

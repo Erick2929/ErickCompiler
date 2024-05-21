@@ -1,13 +1,30 @@
 program main{
-	int hola;
-	hola = 0;
-	if(hola == 0){
-		writeln("hola es 0");
+	int a,b,x,y,i,j;	
+	writeln("prueba semantica");
+	a = 5;
+	b =  a + 3;
+	x = b +5;
+	y = x + a;	
+	i = 0;
+	j = 1;	
+	j = j * 5;
+	writeln("papitas"*2);
+	if ( ( a>b) and (a*5+(b+4)) ) 
+	{
+		i = a*5+(b+4);
+		writeln("caso true");
+		writeln(a);
+	}else
+	{
+		if(y<x)
+		{
+			i = x * (b * y);
+			writeln(x);
+			writeln("if anidado");
+		}else
+		{
+			writeln("ultimo caso");
+		}
 	}
-	else if(hola == 2){
-		writeln("hola es 2");
-	}
-	else{
-		writeln("hola es otra cosa");
-	}
+	writeln(i);	
 }
